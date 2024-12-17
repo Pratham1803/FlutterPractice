@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:first_flutter_app/gradient_container.dart';
+
 void main() {
   // basic example of Background color
   // runApp(
@@ -48,8 +49,10 @@ void main() {
   runApp(
     const MaterialApp(
       home: Scaffold(
-        body: GradientContainer(),
+        body: GradientContainer(
+          [Colors.black, Colors.purple],
+        ),
       ),
     ),
-  ); 
+  );
 }
