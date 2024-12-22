@@ -4,6 +4,7 @@ import 'package:quiz_app/start.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
+
   @override
   State<Quiz> createState() {
     return _QuizState();
@@ -11,22 +12,33 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  Widget? activeScreen;
+  var activeScreen = 'start-screen';
 
-  @override
-  void initState() {
-    activeScreen = Start(switchScreen);
-    super.initState();
-  }
+  // 1. first way to change the screen by passing screen instance in variable
+  // Widget? activeScreen;
+  // @override
+  // void initState() {
+  //   activeScreen = Start(switchScreen);
+  //   super.initState();
+  // }
 
   void switchScreen() {
     setState(() {
-      activeScreen = QuestionScreen();
+      activeScreen = 'question-screen';
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // final screenWidget =
+    //     activeScreen == 'start-screen' ? Start(switchScreen) : QuestionScreen();
+
+    Widget screenWidget = Start(switchScreen);
+    
+    if(activeScreen == 'question-screen') {
+      screenWidget = const QuestionScreen();      
+    }
+
     return MaterialApp(
       home: Container(
         decoration: const BoxDecoration(
@@ -39,7 +51,7 @@ class _QuizState extends State<Quiz> {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: activeScreen,
+        child: screenWidget,
       ),
     );
   }
