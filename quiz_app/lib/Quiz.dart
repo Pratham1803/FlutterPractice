@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/data/question.dart';
 import 'package:quiz_app/question_screen.dart';
 import 'package:quiz_app/start.dart';
+import 'package:quiz_app/answer_screen.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -12,6 +14,7 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  List<String> selectedAnswer = [];
   var activeScreen = 'start-screen';
 
   // 1. first way to change the screen by passing screen instance in variable
@@ -28,15 +31,28 @@ class _QuizState extends State<Quiz> {
     });
   }
 
+  void selectAnswer(String answer) {
+    selectedAnswer.add(answer);
+    setState(() {
+      if (selectedAnswer.length == questions.length) {        
+        activeScreen = 'answer-screen';
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // final screenWidget =
     //     activeScreen == 'start-screen' ? Start(switchScreen) : QuestionScreen();
 
     Widget screenWidget = Start(switchScreen);
-    
-    if(activeScreen == 'question-screen') {
-      screenWidget = const QuestionScreen();      
+
+    if (activeScreen == 'question-screen') {
+      screenWidget = QuestionScreen(chooseAnswer: selectAnswer);
+    }
+
+    if(activeScreen == 'answer-screen'){
+      screenWidget = AnswerScreen(lsAnswer: selectedAnswer);
     }
 
     return MaterialApp(

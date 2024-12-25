@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
 class TextStyleClass extends StatelessWidget {
   final String text;
@@ -10,21 +11,31 @@ class TextStyleClass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (textType == 'heading') {
-      return Text(
-        text,
-        textAlign: TextAlign.center,
-        style: TextStyle(          
+      return Opacity(
+        opacity: 0.7,
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: TextStyle(
             color: color,
-            fontSize: 28,
-            fontWeight: FontWeight.bold,            
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
             decorationThickness: 0,
-            fontFamily: 'arial'),
+          ),
+        ),
       );
     } else {
-      return Text(
-        text,
-        style: TextStyle(
-            color: color, fontSize: 16, fontFamily: 'arial'),
+      return Opacity(
+        opacity: 0.7,
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: color,
+            fontSize: 16,
+            decorationThickness: 0,
+          ),
+        ),
       );
     }
   }
