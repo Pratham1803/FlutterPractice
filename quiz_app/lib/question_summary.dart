@@ -4,7 +4,7 @@ import 'package:quiz_app/style/text_style.dart';
 class QuestionSummary extends StatelessWidget {
   const QuestionSummary(this.summaryData, {super.key});
 
-  final List<Map<String, Object>> summaryData;  
+  final List<Map<String, Object>> summaryData;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -16,19 +16,25 @@ class QuestionSummary extends StatelessWidget {
               return Row(
                 children: [
                   TextStyleClass(
-                    ((data['index'] as int) + 1).toString(),
+                    '${(data['index'] as int) + 1}.',
                   ),
                   const SizedBox(
-                    width: 20,
+                    width: 10,
                   ),
                   Expanded(
                     child: Column(
                       children: [
-                        TextStyleClass(data['question'] as String),
-                        TextStyleClass(data['correctAnswer'] as String),
-                        TextStyleClass(data['userAnswer'] as String),
+                        TextStyleClass('Q. ${data['question'] as String}'),
+                        const SizedBox(height: 10),
+                        TextStyleClass(
+                            'Correct Ans: ${data['correctAnswer'] as String}'),
+                        TextStyleClass(
+                            'Your Ans: ${data['userAnswer'] as String}'),
                         const SizedBox(
                           height: 20,
+                        ),
+                        const Divider(
+                          height: 10,
                         )
                       ],
                     ),

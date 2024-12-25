@@ -4,9 +4,10 @@ import 'package:quiz_app/data/question.dart';
 import 'package:quiz_app/question_summary.dart';
 
 class AnswerScreen extends StatelessWidget {
-  const AnswerScreen({super.key, required this.lsAnswer});
+  const AnswerScreen({super.key, required this.lsAnswer, required this.restartQuiz});
 
   final List<String> lsAnswer;
+  final void Function() restartQuiz;
 
   List<Map<String, Object>> getSummary() {
     List<Map<String, Object>> summary = [];
@@ -49,7 +50,7 @@ class AnswerScreen extends StatelessWidget {
             QuestionSummary(getSummary()),
             const SizedBox(height: 20),
             TextButton(
-              onPressed: () {},
+              onPressed: restartQuiz,
               child: const TextStyleClass('Restart Quiz'),
             )
           ],
