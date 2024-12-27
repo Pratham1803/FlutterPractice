@@ -24,12 +24,12 @@ class QuestionSummary extends StatelessWidget {
                   Expanded(
                     child: Column(
                       children: [
-                        TextStyleClass('Q. ${data['question'] as String}'),
+                        TextStyleClass('Q. ${data['question']}'),
                         const SizedBox(height: 10),
                         TextStyleClass(
-                            'Correct Ans: ${data['correctAnswer'] as String}'),
+                            'Correct Ans: ${data['correctAnswer']}'),
                         TextStyleClass(
-                            'Your Ans: ${data['userAnswer'] as String}'),
+                            'Your Ans: ${data['userAnswer']}'),
                         const SizedBox(
                           height: 20,
                         ),
