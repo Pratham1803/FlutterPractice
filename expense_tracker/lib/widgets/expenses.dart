@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/models/expense.model.dart';
 import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
+import 'package:expense_tracker/widgets/new_expense.dart';
 
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
@@ -21,12 +22,27 @@ class _ExpensesState extends State<Expenses> {
         title: 'Cinema',
         amount: 16.69,
         date: DateTime.now(),
-        category: Category.leisure),        
+        category: Category.leisure),
   ];
+
+  void _openAddExpense() {
+    showModalBottomSheet(
+        context: context, builder: (context) => const NewExpense());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Expenses Tracker'),
+        backgroundColor: Colors.blue[300],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: _openAddExpense,
+          ),
+        ],
+      ),
       body: Column(
         children: [
           const Text('The Chart'),
