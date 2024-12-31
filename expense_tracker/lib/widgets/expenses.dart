@@ -25,9 +25,18 @@ class _ExpensesState extends State<Expenses> {
         category: Category.leisure),
   ];
 
+  void addExpense(ExpenseModel model) {
+    setState(() {
+      _expenses.add(model);
+    });
+  }
+
   void _openAddExpense() {
     showModalBottomSheet(
-        context: context, builder: (context) => const NewExpense());
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => NewExpense(addExpense),
+    );
   }
 
   @override

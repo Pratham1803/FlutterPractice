@@ -1,17 +1,19 @@
+import 'package:expense_tracker/models/expense.model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 final formatter = DateFormat.yMd();
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense(this.addExpenses,{super.key});
+  final void Function(ExpenseModel model) addExpenses;
   @override
   State<NewExpense> createState() {
     return _NewExpenseState();
   }
 }
 
-class _NewExpenseState extends State<NewExpense> {
+class _NewExpenseState extends State<NewExpense> {  
   // var _TitleText = '';
   // void _saveTitleText(String titleText) {
   //   _TitleText = titleText;
@@ -20,6 +22,39 @@ class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime? _selectedDate;
+  Category _selectedCategory = Category.leisure;
+
+  void _saveExpense() {
+    final enterAmt = double.tryParse(_amountController.text);
+    final isInValidAmt = enterAmt == null || enterAmt <= 0;
+    if (isInValidAmt ||
+        _titleController.text.trim().isEmpty ||
+        _selectedDate == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Invalid Input'),
+          content: const Text('Please Fill All The Fields'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Dismiss'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+    ExpenseModel model = ExpenseModel(amount: enterAmt, 
+    title: _titleController.text.trim(),
+    category: _selectedCategory,
+    date: _selectedDate!);
+    
+    widget.addExpenses(model);
+    Navigator.pop(context);
+  }
 
   void _showDatePickerDialog() async {
     final DateTime now = DateTime.now();
@@ -35,6 +70,13 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
+  void _selectCategory(value) {
+    if (value == null) return;
+    setState(() {
+      _selectedCategory = value;
+    });
+  }  
+
   @override
   void dispose() {
     _titleController.dispose();
@@ -44,8 +86,8 @@ class _NewExpenseState extends State<NewExpense> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15),
+    return Padding(  
+      padding: const EdgeInsets.fromLTRB(15,50,15,15),
       child: Column(
         children: [
           TextField(
@@ -90,15 +132,19 @@ class _NewExpenseState extends State<NewExpense> {
           ),
           Row(
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  // print(_TitleText);
-                  print(_titleController.text);
-                  print(_amountController.text);
-                  Navigator.pop(context);
-                },
-                child: const Text('Save Expense'),
+              DropdownButton(
+                value: _selectedCategory,
+                items: Category.values
+                    .map(
+                      (category) => DropdownMenuItem(
+                        value: category,
+                        child: Text(category.name.toUpperCase()),
+                      ),
+                    )
+                    .toList(),
+                onChanged: _selectCategory,
               ),
+              const Spacer(),
               TextButton(
                 onPressed: () {
                   _titleController.clear();
@@ -106,7 +152,11 @@ class _NewExpenseState extends State<NewExpense> {
                   Navigator.pop(context);
                 },
                 child: const Text('Cancel'),
-              )
+              ),
+              ElevatedButton(
+                onPressed: _saveExpense,
+                child: const Text('Save Expense'),
+              ),
             ],
           )
         ],
