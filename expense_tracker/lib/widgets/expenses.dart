@@ -31,6 +31,30 @@ class _ExpensesState extends State<Expenses> {
     });
   }
 
+  void _removeExpense(ExpenseModel model) {
+    int index = _expenses.indexOf(model);
+    setState(
+      () {
+        _expenses.remove(model);
+
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 3),
+            content: const Text('Expense Delete'),
+            action: SnackBarAction(
+                label: 'Undo',
+                onPressed: () {
+                  setState(() {
+                    _expenses.insert(index, model);
+                  },);
+                }),
+          ),
+        );
+      },
+    );
+  }
+
   void _openAddExpense() {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -41,10 +65,20 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    Widget mainContent = const Center(
+      child: Text('No Expense Available, Try to Add a new one'),
+    );
+
+    if (_expenses.isNotEmpty) {
+      mainContent = ExpensesList(
+        arrExpenses: _expenses,
+        removeExpense: _removeExpense,
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Expenses Tracker'),
-        backgroundColor: Colors.blue[300],
+        title: const Text('Expenses Tracker'),        
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -55,9 +89,7 @@ class _ExpensesState extends State<Expenses> {
       body: Column(
         children: [
           const Text('The Chart'),
-          Expanded(
-            child: ExpensesList(arrExpenses: _expenses),
-          ),
+          Expanded(child: mainContent),
         ],
       ),
     );
