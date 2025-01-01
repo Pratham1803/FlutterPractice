@@ -1,7 +1,10 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/models/expense.model.dart';
 import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_tracker/widgets/new_expense.dart';
+import 'package:expense_tracker/widgets/chart/chart.dart';
 
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
@@ -45,9 +48,11 @@ class _ExpensesState extends State<Expenses> {
             action: SnackBarAction(
                 label: 'Undo',
                 onPressed: () {
-                  setState(() {
-                    _expenses.insert(index, model);
-                  },);
+                  setState(
+                    () {
+                      _expenses.insert(index, model);
+                    },
+                  );
                 }),
           ),
         );
@@ -78,7 +83,7 @@ class _ExpensesState extends State<Expenses> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Expenses Tracker'),        
+        title: const Text('Expenses Tracker'),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -88,7 +93,9 @@ class _ExpensesState extends State<Expenses> {
       ),
       body: Column(
         children: [
-          const Text('The Chart'),
+          Chart(
+            expenses: _expenses,
+          ),
           Expanded(child: mainContent),
         ],
       ),
