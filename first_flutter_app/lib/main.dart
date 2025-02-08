@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:first_flutter_app/gradient_container.dart';
+// import 'package:first_flutter_app/gradient_container.dart';
+import 'package:first_flutter_app/api/api_get.dart';
 
 void main() {
   // basic example of Background color
@@ -46,13 +47,19 @@ void main() {
   // );
 
   // Custom Widget Example
+  // runApp(
+  //   const MaterialApp(
+  //     home: Scaffold(
+  //       body: GradientContainer(
+  //         [Colors.black, Colors.purple],
+  //       ),
+  //     ),
+  //   ),
+  // );
+
   runApp(
     const MaterialApp(
-      home: Scaffold(
-        body: GradientContainer(
-          [Colors.black, Colors.purple],
-        ),
-      ),
+      home: ApiApp(),
     ),
   );
 }
