@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals/model/meal.dart';
 import 'package:meals/screens/categories.dart';
 import 'package:meals/screens/meals.dart';
 
@@ -13,9 +14,21 @@ class TabScreen extends StatefulWidget {
 
 class _TabScreenState extends State<TabScreen> {
   int _selectedPageIndex = 0;
-  
+  final List<Meal> _favoriteMeals = [];
 
-  void _selectPage(int index){
+  void _toggleMealFavouriteStatus(Meal meal) {
+    final isExisting = _favoriteMeals.contains(meal);
+
+    setState(() {
+      if (isExisting) {
+        _favoriteMeals.remove(meal);
+      } else {
+        _favoriteMeals.add(meal);
+      }
+    });
+  }
+
+  void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
     });
@@ -23,11 +36,16 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget activePage = const CategoriesScreen();
+    Widget activePage = CategoriesScreen(
+      onFavToggle: _toggleMealFavouriteStatus,
+    );
     var activePageTitle = 'Categories';
 
-    if(_selectedPageIndex == 1){
-      activePage = const MealsScreen(meals: [],);
+    if (_selectedPageIndex == 1) {
+      activePage = MealsScreen(
+        meals: _favoriteMeals,
+        onFavToggle: _toggleMealFavouriteStatus,
+      );
       activePageTitle = 'Your Favorites';
     }
 
@@ -37,7 +55,7 @@ class _TabScreenState extends State<TabScreen> {
       ),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
-        onTap:_selectPage,
+        onTap: _selectPage,
         currentIndex: _selectedPageIndex,
         items: const [
           BottomNavigationBarItem(

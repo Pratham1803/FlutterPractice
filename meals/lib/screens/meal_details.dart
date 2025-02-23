@@ -3,14 +3,27 @@ import 'package:meals/model/meal.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealDetailsScreen extends StatelessWidget {
-  const MealDetailsScreen({super.key, required this.meal});
+  const MealDetailsScreen({
+    super.key,
+    required this.meal,
+    required this.onFavToggle,
+  });
 
   final Meal meal;
+  final Function(Meal meal) onFavToggle;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              onFavToggle(meal);
+            },
+            icon: const Icon(Icons.star_border),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -32,7 +45,8 @@ class MealDetailsScreen extends StatelessWidget {
             const SizedBox(height: 8),
             for (final ingredient in meal.ingredients)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                 child: Text(
                   ingredient,
                   textAlign: TextAlign.center,
@@ -52,7 +66,8 @@ class MealDetailsScreen extends StatelessWidget {
             const SizedBox(height: 8),
             for (final step in meal.steps)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                 child: Text(
                   step,
                   textAlign: TextAlign.center,
