@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
                             : Theme.of(context)
                                 .colorScheme
                                 .onPrimaryContainer),
-                    textAlign: TextAlign.start,
+                    textAlign: TextAlign.justify,
                   ),
                   const SizedBox(height: 8),
                   Text(
