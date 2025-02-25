@@ -1,3 +1,4 @@
+import 'package:amp_assignments/utils/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -110,29 +111,7 @@ class _MinmaxState extends State<Minmax> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'MinMax Finder',
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge
-              ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
-        ),
-        elevation: 10,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.blue,
-                Colors.lightBlueAccent,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-        ),
-        foregroundColor: Colors.white,
-      ),
+      appBar: const CustomAppBar(title: 'MinMax Finder'),
       body: Center(
         child: SingleChildScrollView(
           child: Padding(

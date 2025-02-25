@@ -1,3 +1,4 @@
+import 'package:amp_assignments/utils/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class Interest extends StatefulWidget {
@@ -78,23 +79,7 @@ class _InterestState extends State<Interest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Calculate Simple Interest'),
-        elevation: 10,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.blue,
-                Colors.lightBlueAccent,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-        ),
-        foregroundColor: Colors.white,
-      ),
+      appBar: const CustomAppBar(title: 'Calculate Simple Interest'),
       body: Center(
         child: SingleChildScrollView(
           child: Padding(

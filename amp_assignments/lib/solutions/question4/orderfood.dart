@@ -1,3 +1,4 @@
+import 'package:amp_assignments/utils/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class OrderFood extends StatefulWidget {
@@ -66,29 +67,7 @@ class _OrderFoodState extends State<OrderFood> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Order Food',
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge
-              ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
-        ),
-        elevation: 10,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.blue,
-                Colors.lightBlueAccent,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-        ),
-        foregroundColor: Colors.white,
-      ),
+      appBar: const CustomAppBar(title: 'Order Food'),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(30),

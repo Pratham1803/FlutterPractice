@@ -1,4 +1,5 @@
 import 'package:amp_assignments/routes.dart';
+import 'package:amp_assignments/utils/customAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:amp_assignments/data/questions.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,28 +31,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'AMP Practical Assignments',
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge
-              ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
-        ),
-        elevation: 10,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.blue,
-                Colors.lightBlueAccent,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-        ),
-        foregroundColor: Colors.white,
+      appBar: const CustomAppBar(
+        title: 'AMP Practical Assignments',
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),

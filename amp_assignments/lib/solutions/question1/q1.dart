@@ -1,3 +1,4 @@
+import 'package:amp_assignments/utils/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -9,22 +10,8 @@ class Question1 extends StatelessWidget {
     final data = ModalRoute.of(context)!.settings.arguments;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(data == '/q5' ? 'Program 5' : 'Program 1'),
-        elevation: 10,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.blue,
-                Colors.lightBlueAccent,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-        ),
-        foregroundColor: Colors.white,
+      appBar: CustomAppBar(
+        title: data == '/q5' ? 'Program 5' : 'Program 1',
       ),
       endDrawer: Drawer(
         child: ListView(
