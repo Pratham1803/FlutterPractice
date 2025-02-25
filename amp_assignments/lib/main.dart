@@ -74,9 +74,7 @@ class MyApp extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         color: index % 2 == 0
                             ? Theme.of(context).colorScheme.onPrimaryContainer
-                            : Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer),
+                            : Theme.of(context).colorScheme.onPrimaryContainer),
                     textAlign: TextAlign.justify,
                   ),
                   const SizedBox(height: 8),
@@ -85,14 +83,17 @@ class MyApp extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: index % 2 == 0
                             ? Theme.of(context).colorScheme.onPrimaryContainer
-                            : Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer),
+                            : Theme.of(context).colorScheme.onPrimaryContainer),
                   ),
                 ],
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/q${index + 1}');
+                String path = '/q${index + 1}';
+
+                Object arg = Object();
+                if (path == '/q5') arg = path;
+
+                Navigator.pushNamed(context, path, arguments: arg);
               },
               tileColor: index % 2 == 0
                   ? Theme.of(context).colorScheme.primaryContainer

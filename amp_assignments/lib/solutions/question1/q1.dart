@@ -6,9 +6,11 @@ class Question1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final data = ModalRoute.of(context)!.settings.arguments;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Program 1'),
+        title: Text(data == '/q5' ? 'Program 5' : 'Program 1'),
         elevation: 10,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -65,6 +67,9 @@ class Question1 extends StatelessWidget {
               title: const Text('Interest Calculator'),
               onTap: () {
                 Navigator.pop(context);
+                if (data == '/q5') {
+                  Navigator.pushNamed(context, '/q2');
+                }
               },
             ),
             ListTile(
@@ -73,6 +78,9 @@ class Question1 extends StatelessWidget {
               title: const Text('MinMax'),
               onTap: () {
                 Navigator.pop(context);
+                if (data == '/q5') {
+                  Navigator.pushNamed(context, '/q3');
+                }
               },
             ),
             ListTile(
@@ -81,6 +89,9 @@ class Question1 extends StatelessWidget {
               title: const Text('Order Food'),
               onTap: () {
                 Navigator.pop(context);
+                if (data == '/q5') {
+                  Navigator.pushNamed(context, '/q4');
+                }
               },
             ),
             const Divider(),

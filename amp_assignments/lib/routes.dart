@@ -13,6 +13,7 @@ class Routes {
       '/q2': (context) => const Interest(),
       '/q3':(context) => const Minmax(),
       '/q4':(context) => const OrderFood(),
+      '/q5':(context) => const Question1(),
     };
   }
 }
