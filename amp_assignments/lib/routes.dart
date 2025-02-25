@@ -3,6 +3,7 @@ import 'package:amp_assignments/solutions/question1/q1.dart';
 import 'package:amp_assignments/solutions/question2/interest.dart';
 import 'package:amp_assignments/solutions/question3/minmax.dart';
 import 'package:amp_assignments/solutions/question4/orderfood.dart';
+import 'package:amp_assignments/solutions/question6/Q6.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -14,6 +15,7 @@ class Routes {
       '/q3':(context) => const Minmax(),
       '/q4':(context) => const OrderFood(),
       '/q5':(context) => const Question1(),
+      '/q6':(context) => const Question6(),
     };
   }
 }
