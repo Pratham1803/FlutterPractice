@@ -67,6 +67,20 @@ display a button “Try again”, clicking which should re-direct to  login scre
 Modify program # 4. Instead of Select All checkbox, use two radiobuttons with labels “Select 
 All” and “Select None”. Clicking a particular radiobutton should select or deselect all the 
 checkboxes.
+""",
+"""
+Take four checkboxes with following labels:  
+ Hall 
+ Kitchen 
+ Bedroom 
+ Lobby 
+Take four bulb icons. i.e. one each for part of the house. 
+Selecting a particular checkbox should change the bulb color to yellow. Deselecting the same 
+checkbox should change the bulb color from yellow to gray. Each checkbox should control 
+any one particular bulb icon. 
+""",
+"""
+Modify program # 1. Add one more option “Light On-OFF” to the drawer before exit.  
 """
   ];
 }

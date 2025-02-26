@@ -3,6 +3,7 @@ import 'package:amp_assignments/solutions/question1/q1.dart';
 import 'package:amp_assignments/solutions/question10/errormsg.dart';
 import 'package:amp_assignments/solutions/question10/login.dart';
 import 'package:amp_assignments/solutions/question10/welcome.dart';
+import 'package:amp_assignments/solutions/question11/q11.dart';
 import 'package:amp_assignments/solutions/question2/interest.dart';
 import 'package:amp_assignments/solutions/question3/minmax.dart';
 import 'package:amp_assignments/solutions/question4/orderfood.dart';
@@ -34,6 +35,7 @@ class Routes {
       '/q10':(context) => const Question10(),
       '/q10/welcome':(context) => const Welcome(),
       '/q10/errorMsg':(context) => const Errormsg(),
+      '/q11':(context) => const Question11(),
     };
   }
 }
