@@ -6,8 +6,90 @@ class Question7 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: CustomAppBar(title: 'Question 7'),
+    return Scaffold(
+      appBar: const CustomAppBar(title: 'Question 7'),
+      body: Center(
+        child: Container(
+          padding: const EdgeInsets.all(40),
+          decoration: BoxDecoration(
+            border: Border.all(),
+            color: Theme.of(context).colorScheme.surfaceTint,
+            borderRadius: const BorderRadius.all(
+              Radius.elliptical(5, 15),
+            ),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 8,
+                offset: Offset(2, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/q7/s2');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.onInverseSurface,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.horizontal(
+                      left: Radius.circular(10),
+                    ),
+                  ),
+                ),
+                child: const Text('Screen 2'),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/q7/s3');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.onInverseSurface,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
+                ),
+                child: const Text('Screen 3'),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/q7/s4');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.onInverseSurface,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.horizontal(
+                      right: Radius.circular(10),
+                    ),
+                  ),
+                ),
+                child: const Text('Screen 4'),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

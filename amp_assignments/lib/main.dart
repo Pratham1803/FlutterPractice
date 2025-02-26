@@ -1,5 +1,5 @@
 import 'package:amp_assignments/routes.dart';
-import 'package:amp_assignments/utils/customAppBar.dart';
+import 'package:amp_assignments/utils/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:amp_assignments/data/questions.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,10 +8,10 @@ ThemeData theme = ThemeData(
   brightness: Brightness.light,
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
-    seedColor: Colors.lightBlue,
+    seedColor: Colors.blue.shade200,
     brightness: Brightness.light,
   ),
-  textTheme: GoogleFonts.latoTextTheme(),
+  textTheme: GoogleFonts.oswaldTextTheme(),
 );
 
 void main() {
@@ -53,9 +53,12 @@ class MyApp extends StatelessWidget {
                   Text(
                     "Question ${index + 1}",
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: index % 2 == 0
-                            ? Theme.of(context).colorScheme.onPrimaryContainer
-                            : Theme.of(context).colorScheme.onPrimaryContainer),
+                          color: index % 2 == 0
+                              ? Theme.of(context).colorScheme.onPrimaryContainer
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                        ),
                     textAlign: TextAlign.justify,
                   ),
                   const SizedBox(height: 8),
