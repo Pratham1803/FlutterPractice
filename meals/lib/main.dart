@@ -1,8 +1,9 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meals/screens/tabs.dart';
-
 
 final theme = ThemeData(
   useMaterial3: true,
@@ -14,7 +15,12 @@ final theme = ThemeData(
 );
 
 void main() {
-  runApp(const App());
+  runApp(
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => const App(),
+    ),
+  );
 }
 
 class App extends StatelessWidget {
