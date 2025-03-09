@@ -15,12 +15,15 @@ final theme = ThemeData(
 );
 
 void main() {
-  runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => const App(),
-    ),
-  );
+  // Run for multiple device
+  // runApp(
+  //   DevicePreview(
+  //     enabled: !kReleaseMode,
+  //     builder: (context) => const App(),
+  //   ),
+  // );
+
+  runApp(const App());
 }
 
 class App extends StatelessWidget {

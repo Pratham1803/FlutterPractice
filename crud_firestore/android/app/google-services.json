@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "147106568496",
+    "project_id": "flutterdemo-d2ced",
+    "storage_bucket": "flutterdemo-d2ced.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:147106568496:android:02b152516842dd92a850f5",
+        "android_client_info": {
+          "package_name": "com.example.crud_firestore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChVcH3IYPdx3AqiQO6rQBCr9Tk9PxMkvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
