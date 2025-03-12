@@ -2,11 +2,15 @@ import 'package:expense_tracker/models/expense.model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+// Formatter for formatting date into a readable format (MM/DD/YYYY)
 final formatter = DateFormat.yMd();
 
 class NewExpense extends StatefulWidget {
   const NewExpense(this.addExpenses, {super.key});
+
+  // Callback function to add a new expense, passed from parent widget
   final void Function(ExpenseModel model) addExpenses;
+
   @override
   State<NewExpense> createState() {
     return _NewExpenseState();
@@ -14,19 +18,20 @@ class NewExpense extends StatefulWidget {
 }
 
 class _NewExpenseState extends State<NewExpense> {
-  // var _TitleText = '';
-  // void _saveTitleText(String titleText) {
-  //   _TitleText = titleText;
-  // }
-
+  // Controllers to capture user input for title and amount
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+
+  // Stores selected date and category for the expense
   DateTime? _selectedDate;
   Category _selectedCategory = Category.leisure;
 
+  // Function to validate input and save the expense
   void _saveExpense() {
     final enterAmt = double.tryParse(_amountController.text);
     final isInValidAmt = enterAmt == null || enterAmt <= 0;
+
+    // If any input is invalid, show an alert dialog
     if (isInValidAmt ||
         _titleController.text.trim().isEmpty ||
         _selectedDate == null) {
@@ -38,7 +43,7 @@ class _NewExpenseState extends State<NewExpense> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(context); // Close the dialog
               },
               child: const Text('Dismiss'),
             ),
@@ -47,19 +52,24 @@ class _NewExpenseState extends State<NewExpense> {
       );
       return;
     }
+
+    // Create a new expense model with user input
     ExpenseModel model = ExpenseModel(
         amount: enterAmt,
         title: _titleController.text.trim(),
         category: _selectedCategory,
         date: _selectedDate!);
 
-    widget.addExpenses(model);
-    Navigator.pop(context);
+    widget.addExpenses(model); // Pass expense to the parent widget
+    Navigator.pop(context); // Close the input form
   }
 
+  // Function to show the date picker dialog
   void _showDatePickerDialog() async {
     final DateTime now = DateTime.now();
     final firstDate = DateTime(now.year - 1, now.month, now.day);
+
+    // Show date picker and wait for user selection
     final showDate = await showDatePicker(
         context: context,
         initialDate: now,
@@ -67,10 +77,11 @@ class _NewExpenseState extends State<NewExpense> {
         lastDate: now);
 
     setState(() {
-      _selectedDate = showDate;
+      _selectedDate = showDate; // Update selected date
     });
   }
 
+  // Function to handle category selection from dropdown
   void _selectCategory(value) {
     if (value == null) return;
     setState(() {
@@ -78,6 +89,7 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
+  // Dispose controllers when the widget is removed
   @override
   void dispose() {
     _titleController.dispose();
@@ -85,73 +97,79 @@ class _NewExpenseState extends State<NewExpense> {
     super.dispose();
   }
 
+  // Widget to get title input field
   Widget get _getTitleWidget {
     return TextField(
-      // onChanged: _saveTitleText,
       controller: _titleController,
       decoration: const InputDecoration(
-        labelText: 'Title',
+        labelText: 'Title', // Placeholder label for user guidance
       ),
     );
   }
 
+  // Widget to get amount input field
   Widget get _getAmountWidget {
     return TextField(
       controller: _amountController,
-      keyboardType: TextInputType.number,
+      keyboardType: TextInputType.number, // Allows only numeric input
       decoration: const InputDecoration(
         labelText: 'Amount',
-        prefixText: '\$ ',
+        prefixText: '\$ ', // Adds currency symbol
       ),
     );
   }
 
+  // Widget to get category dropdown
   Widget get _getCategoryDropDown {
     return DropdownButton(
-      value: _selectedCategory,
+      value: _selectedCategory, // Default selected category
       items: Category.values
           .map(
             (category) => DropdownMenuItem(
               value: category,
-              child: Text(category.name.toUpperCase()),
+              child: Text(category.name
+                  .toUpperCase()), // Show category name in uppercase
             ),
           )
           .toList(),
-      onChanged: _selectCategory,
+      onChanged: _selectCategory, // Updates category on selection
     );
   }
 
+  // Widget to display selected date and allow date selection
   Widget get _getDateWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(_selectedDate == null
-            ? 'No Date Selected'
-            : formatter.format(_selectedDate!)),
-        const SizedBox(width: 10),
+            ? 'No Date Selected' // Default text when no date is picked
+            : formatter
+                .format(_selectedDate!)), // Show selected date in formatted way
+        const SizedBox(width: 10), // Adds spacing
         IconButton(
-          onPressed: _showDatePickerDialog,
-          icon: const Icon(Icons.calendar_month),
+          onPressed: _showDatePickerDialog, // Opens date picker dialog
+          icon: const Icon(Icons.calendar_month), // Calendar icon
         )
       ],
     );
   }
 
+  // Buttons for cancelling or saving the expense
   Widget get _getButtons {
     return Row(
       children: [
-        const Spacer(),
+        const Spacer(), // Pushes buttons to the right
         TextButton(
           onPressed: () {
             _titleController.clear();
             _amountController.clear();
-            Navigator.pop(context);
+            Navigator.pop(context); // Close the dialog
           },
           child: const Text('Cancel'),
         ),
         ElevatedButton(
-          onPressed: _saveExpense,
+          onPressed: _saveExpense, // Saves expense
           child: const Text('Save Expense'),
         )
       ],
@@ -160,43 +178,47 @@ class _NewExpenseState extends State<NewExpense> {
 
   @override
   Widget build(BuildContext context) {
-    final keyboard = MediaQuery.of(context).viewInsets.bottom;
+    final keyboard =
+        MediaQuery.of(context).viewInsets.bottom; // Detects keyboard visibility
 
     return LayoutBuilder(builder: (ctx, constraint) {
-      final width = constraint.maxWidth;
+      final width = constraint.maxWidth; // Get screen width
 
       return SizedBox(
-        height: double.infinity,
+        height: double.infinity, // Expand to full height
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.fromLTRB(15, 15, 15, keyboard + 15),
+            padding: EdgeInsets.fromLTRB(
+                15, 15, 15, keyboard + 15), // Adjust padding based on keyboard
             child: Column(
               children: [
-                if (width >= 600)
+                if (width >= 600) // If screen is wide, arrange inputs in a row
                   Row(
                     children: [
                       Expanded(
-                        child: _getTitleWidget,
+                        child: _getTitleWidget, // Title input field
                       ),
                       const SizedBox(
                         width: 20,
                       ),
                       Expanded(
-                        child: _getAmountWidget,
+                        child: _getAmountWidget, // Amount input field
                       )
                     ],
                   )
                 else
-                  _getTitleWidget,
-                if (width >= 600)
+                  _getTitleWidget, // Show title field normally in smaller screens
+
+                if (width >=
+                    600) // If wide screen, show category dropdown and date in one row
                   Row(children: [
                     Row(
                       children: [
-                        _getCategoryDropDown,
+                        _getCategoryDropDown, // Category selection
                       ],
                     ),
                     Expanded(
-                      child: _getDateWidget,
+                      child: _getDateWidget, // Date selection
                     ),
                     const SizedBox(
                       height: 50,
@@ -206,24 +228,27 @@ class _NewExpenseState extends State<NewExpense> {
                   Row(
                     children: [
                       Expanded(
-                        child: _getAmountWidget,
+                        child:
+                            _getAmountWidget, // Amount field in smaller screens
                       ),
                       Expanded(
-                        child: _getDateWidget,
+                        child: _getDateWidget, // Date picker button
                       )
                     ],
                   ),
+
                 const SizedBox(
                   height: 50,
                 ),
-                if (width >= 600)
+
+                if (width >= 600) // If wide screen, show buttons normally
                   _getButtons
                 else
                   Row(
                     children: [
-                      _getCategoryDropDown,
+                      _getCategoryDropDown, // Category dropdown in a row with buttons
                       Expanded(
-                        child: _getButtons,
+                        child: _getButtons, // Save and cancel buttons
                       ),
                     ],
                   )

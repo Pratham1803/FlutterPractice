@@ -1,4 +1,8 @@
+// This file contains the questions that are displayed in the app.
 class Questions {
+  // This class contains the questions that are displayed in the app.
+
+  // List of questions
   static List<String> questions = [
     """Write a program to create a drawer with following details:
   - The header should display your picture inside a circular frame. (Hint: Use
@@ -68,7 +72,7 @@ Modify program # 4. Instead of Select All checkbox, use two radiobuttons with la
 All” and “Select None”. Clicking a particular radiobutton should select or deselect all the 
 checkboxes.
 """,
-"""
+    """
 Take four checkboxes with following labels:  
  Hall 
  Kitchen 
@@ -79,7 +83,7 @@ Selecting a particular checkbox should change the bulb color to yellow. Deselect
 checkbox should change the bulb color from yellow to gray. Each checkbox should control 
 any one particular bulb icon. 
 """,
-"""
+    """
 Modify program # 1. Add one more option “Light On-OFF” to the drawer before exit.  
 """
   ];

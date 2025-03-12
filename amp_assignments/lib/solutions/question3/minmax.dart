@@ -2,6 +2,7 @@ import 'package:amp_assignments/utils/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// **MinMax Finder Stateful Widget**
 class Minmax extends StatefulWidget {
   const Minmax({super.key});
 
@@ -10,17 +11,23 @@ class Minmax extends StatefulWidget {
 }
 
 class _MinmaxState extends State<Minmax> {
+  // Controllers for user input fields
   final _txtFirstNumCtrl = TextEditingController();
   final _txtSecondNumCtrl = TextEditingController();
   final _txtThirdNumCtrl = TextEditingController();
 
+  // Error messages for input validation
   String? _errorTextNum1;
   String? _errorTextNum2;
   String? _errorTextNum3;
 
+  // UI spacing variable
   final double _heightBetweenTextFields = 30;
+
+  // Stores user input numbers
   var numbers = [];
 
+  /// **Dispose controllers when widget is removed**
   @override
   void dispose() {
     _txtFirstNumCtrl.dispose();
@@ -29,6 +36,7 @@ class _MinmaxState extends State<Minmax> {
     super.dispose();
   }
 
+  /// **Creates an AlertDialog to display results**
   void _createAlertBox(String title, String message) {
     AlertDialog alertDialog = AlertDialog(
       title: Text(title),
@@ -49,65 +57,59 @@ class _MinmaxState extends State<Minmax> {
     );
   }
 
+  /// **Finds Maximum Number**
   void _btnFindMaxClick() {
-    if (!_validateInput()) {
-      return;
-    }
+    if (!_validateInput()) return; // Validate input first
 
-    if (numbers[0] > numbers[1] && numbers[0] > numbers[2]) {
-      _createAlertBox('Maximum Number', '${numbers[0]} is Maximum Number');
-    } else if (numbers[1] > numbers[0] && numbers[1] > numbers[2]) {
-      _createAlertBox('Maximum Number', '${numbers[1]} is Maximum Number');
-    } else {
-      _createAlertBox('Maximum Number', '${numbers[2]} is Maximum Number');
-    }
+    double maxNumber =
+        numbers.reduce((curr, next) => curr > next ? curr : next);
+    _createAlertBox('Maximum Number', '$maxNumber is the Maximum Number');
     _resetFields();
   }
 
+  /// **Finds Minimum Number**
   void _btnFindMinClick() {
-    if (!_validateInput()) {
-      return;
-    }
+    if (!_validateInput()) return; // Validate input first
 
-    if (numbers[0] < numbers[1] && numbers[0] < numbers[2]) {
-      _createAlertBox('Minimum Number', '${numbers[0]} is Minimum Number');
-    } else if (numbers[1] < numbers[0] && numbers[1] < numbers[2]) {
-      _createAlertBox('Minimum Number', '${numbers[1]} is Minimum Number');
-    } else {
-      _createAlertBox('Minimum Number', '${numbers[2]} is Minimum Number');
-    }
+    double minNumber =
+        numbers.reduce((curr, next) => curr < next ? curr : next);
+    _createAlertBox('Minimum Number', '$minNumber is the Minimum Number');
     _resetFields();
   }
 
-  void _resetFields(){
-    _txtFirstNumCtrl.text = '';
-    _txtSecondNumCtrl.text = '';
-    _txtThirdNumCtrl.text = '';
+  /// **Resets all input fields**
+  void _resetFields() {
+    _txtFirstNumCtrl.clear();
+    _txtSecondNumCtrl.clear();
+    _txtThirdNumCtrl.clear();
   }
 
+  /// **Validates user input and checks for empty fields**
   bool _validateInput() {
-    numbers.clear();
+    numbers.clear(); // Reset numbers list
+
     setState(() {
-      _errorTextNum1 =
-          _txtFirstNumCtrl.text.isEmpty ? "Enter a Number here" : null;
-
-      _errorTextNum2 =
-          _txtSecondNumCtrl.text.isEmpty ? "Enter a Number here" : null;
-
-      _errorTextNum3 =
-          _txtThirdNumCtrl.text.isEmpty ? "Enter a Number here" : null;
+      _errorTextNum1 = _txtFirstNumCtrl.text.isEmpty ? "Enter a Number" : null;
+      _errorTextNum2 = _txtSecondNumCtrl.text.isEmpty ? "Enter a Number" : null;
+      _errorTextNum3 = _txtThirdNumCtrl.text.isEmpty ? "Enter a Number" : null;
     });
-    if (_errorTextNum1 != null &&
-        _errorTextNum2 != null &&
+
+    // If any error exists, return false
+    if (_errorTextNum1 != null ||
+        _errorTextNum2 != null ||
         _errorTextNum3 != null) {
       return false;
     }
+
+    // Convert inputs to double and store them
     numbers.add(double.parse(_txtFirstNumCtrl.text));
     numbers.add(double.parse(_txtSecondNumCtrl.text));
     numbers.add(double.parse(_txtThirdNumCtrl.text));
+
     return true;
   }
 
+  /// **Build Method - UI**
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,6 +121,7 @@ class _MinmaxState extends State<Minmax> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // **Title**
                 Text(
                   'Find Min & Max Number',
                   textAlign: TextAlign.center,
@@ -127,9 +130,9 @@ class _MinmaxState extends State<Minmax> {
                           Theme.of(context).colorScheme.onPrimaryFixedVariant,
                       fontStyle: FontStyle.italic),
                 ),
-                const SizedBox(
-                  height: 50,
-                ),
+                const SizedBox(height: 50),
+
+                // **First Number Input**
                 TextField(
                   controller: _txtFirstNumCtrl,
                   keyboardType: TextInputType.number,
@@ -144,9 +147,9 @@ class _MinmaxState extends State<Minmax> {
                         color: Theme.of(context).colorScheme.surfaceDim),
                   ),
                 ),
-                SizedBox(
-                  height: _heightBetweenTextFields,
-                ),
+                SizedBox(height: _heightBetweenTextFields),
+
+                // **Second Number Input**
                 TextField(
                   controller: _txtSecondNumCtrl,
                   keyboardType: TextInputType.number,
@@ -161,9 +164,9 @@ class _MinmaxState extends State<Minmax> {
                         color: Theme.of(context).colorScheme.surfaceDim),
                   ),
                 ),
-                SizedBox(
-                  height: _heightBetweenTextFields,
-                ),
+                SizedBox(height: _heightBetweenTextFields),
+
+                // **Third Number Input**
                 TextField(
                   controller: _txtThirdNumCtrl,
                   keyboardType: TextInputType.number,
@@ -172,18 +175,19 @@ class _MinmaxState extends State<Minmax> {
                   ],
                   decoration: InputDecoration(
                     border: const UnderlineInputBorder(),
-                    errorText: _errorTextNum3,
                     hintText: 'Enter Third Number',
+                    errorText: _errorTextNum3,
                     hintStyle: TextStyle(
                         color: Theme.of(context).colorScheme.surfaceDim),
                   ),
                 ),
-                SizedBox(
-                  height: _heightBetweenTextFields + 30,
-                ),
+                SizedBox(height: _heightBetweenTextFields + 30),
+
+                // **Buttons: Show Max & Show Min**
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    // **Show Max Button**
                     ElevatedButton(
                       onPressed: _btnFindMaxClick,
                       style: ButtonStyle(
@@ -207,10 +211,11 @@ class _MinmaxState extends State<Minmax> {
                       child: Text(
                         'Show Max',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
+                            color: Theme.of(context).colorScheme.onPrimary),
                       ),
                     ),
+
+                    // **Show Min Button**
                     OutlinedButton(
                       onPressed: _btnFindMinClick,
                       style: ButtonStyle(
