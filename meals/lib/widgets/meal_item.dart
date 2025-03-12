@@ -33,12 +33,15 @@ class MealItem extends StatelessWidget {
         onTap: onMealSelect,
         child: Stack(
           children: [
-            FadeInImage(
-              placeholder: MemoryImage(kTransparentImage),
-              image: NetworkImage(meal.imageUrl),
-              fit: BoxFit.cover,
-              height: 250,
-              width: double.infinity,
+            Hero(
+              tag: meal.id,
+              child: FadeInImage(
+                placeholder: MemoryImage(kTransparentImage),
+                image: NetworkImage(meal.imageUrl),
+                fit: BoxFit.cover,
+                height: 250,
+                width: double.infinity,
+              ),
             ),
             Positioned(
               bottom: 0,

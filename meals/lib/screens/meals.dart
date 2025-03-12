@@ -11,15 +11,29 @@ class MealsScreen extends StatelessWidget {
   });
 
   final String? title;
-  final List<Meal> meals;  
+  final List<Meal> meals;
 
   void _selectMeal(BuildContext context, Meal meal) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MealDetailsScreen(
-          meal: meal,          
-        ),
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => MealDetailsScreen(
+    //       meal: meal,
+    //     ),
+    //   ),
+    // );
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            MealDetailsScreen(meal: meal),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(0.0, 1.0);
+          const end = Offset.zero;
+          final tween = Tween(begin: begin, end: end);
+          final offsetAnimation = animation.drive(tween);
+
+          return SlideTransition(position: offsetAnimation, child: child);
+        },
       ),
     );
   }
