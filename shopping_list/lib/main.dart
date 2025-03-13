@@ -12,9 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Groceries',
-      theme: ThemeData.dark().copyWith(
-        useMaterial3: true,
+      title: 'Flutter Groceries',      
+      theme: ThemeData.dark().copyWith(      
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(255, 147, 229, 250),
           brightness: Brightness.dark,
