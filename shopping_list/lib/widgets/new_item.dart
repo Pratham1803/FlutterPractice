@@ -28,19 +28,24 @@ class _NewItemState extends State<NewItem> {
         _isAdding = true;
       });
 
-      final url = Uri.https(
-          'flutterdemo-d2ced-default-rtdb.asia-southeast1.firebasedatabase.app',
-          'shopping-list.json');
+      // firebase url
+      // final url = Uri.https(
+      //     'flutterdemo-d2ced-default-rtdb.asia-southeast1.firebasedatabase.app',
+      //     'shopping-list.json');
 
-      final response = await http.post(
+      // local host url
+      final url = Uri.http('localhost:8000', '/shopping-list'); 
+
+      final response = await http
+          .post(
         url,
         headers: {
           'Content-Type': 'application/json',
         },
         body: json.encode({
-          'name': _enteredName,
-          'quantity': _enteredQuantity,
-          'category': _selectedCategory!.title,
+          "name": _enteredName,
+          "quantity": _enteredQuantity,
+          "category": _selectedCategory!.title,
         }),
       );
 
@@ -52,12 +57,12 @@ class _NewItemState extends State<NewItem> {
         _isAdding = false;
       });
 
-      debugPrint(response.body);
+      debugPrint(response.body); 
 
       final Map<String, dynamic> jsonData = json.decode(response.body);
 
       final newItem = GroceryItem(
-          id: jsonData['name'],
+          id: jsonData['id'],
           name: _enteredName,
           category: _selectedCategory!,
           quantity: _enteredQuantity);

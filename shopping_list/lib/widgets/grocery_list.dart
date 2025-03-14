@@ -26,12 +26,15 @@ class _GroceryListState extends State<GroceryList> {
 
   void _getData() async {
     try {
-      final url = Uri.https(
-          'flutterdemo-d2ced-default-rtdb.asia-southeast1.firebasedatabase.app',
-          'shopping-list.json');
+      // firebase url
+      // final url = Uri.https(
+      //     'flutterdemo-d2ced-default-rtdb.asia-southeast1.firebasedatabase.app',
+      //     'shopping-list.json');
+
+      // local host url
+      final url = Uri.http('localhost:8000', '/shopping-list');
 
       final response = await http.get(url);
-      debugPrint(response.body);
 
       if (response.body == 'null') {
         setState(() {
@@ -41,18 +44,38 @@ class _GroceryListState extends State<GroceryList> {
         return;
       }
 
-      final Map<String, dynamic> data = json.decode(response.body);
+      // for firebase
+      // Map<String, dynamic> data = json.decode(response.body);
+
+      // for local server
+      final jsonRes = json.decode(response.body);
+      final List<dynamic> data = jsonRes['data'];
+
+      debugPrint("data: $data");
 
       final List<GroceryItem> loadedItems = [];
-      for (final item in data.entries) {
+      // for firebase
+      // for (final item in data.entries) {
+      //   final category = categories.entries
+      //       .firstWhere(
+      //           (catItem) => catItem.value.title == item.value['category'])
+      //       .value;
+      //   final newItem = GroceryItem(
+      //     id: item.key,
+      //     name: item.value['name'],
+      //     quantity: item.value['quantity'],
+      //     category: category,
+      //   );
+
+      // for local server
+      for (final item in data) {
         final category = categories.entries
-            .firstWhere(
-                (catItem) => catItem.value.title == item.value['category'])
+            .firstWhere((catItem) => catItem.value.title == item['category'])
             .value;
         final newItem = GroceryItem(
-          id: item.key,
-          name: item.value['name'],
-          quantity: item.value['quantity'],
+          id: item['_id'],
+          name: item['name'],
+          quantity: item['quantity'],
           category: category,
         );
         setState(() {
@@ -64,7 +87,6 @@ class _GroceryListState extends State<GroceryList> {
       setState(() {
         _groceryItems = loadedItems;
       });
-      debugPrint("Groccery ITems: $_groceryItems");
     } catch (error) {
       debugPrint("Error: $error");
       setState(() {
@@ -93,12 +115,18 @@ class _GroceryListState extends State<GroceryList> {
       _groceryItems.remove(item);
     });
 
-    final url = Uri.https(
-        'flutterdemo-d2ced-default-rtdb.asia-southeast1.firebasedatabase.app',
-        'shopping-list/${item.id}.json');
+    // firebase
+    // final url = Uri.https(
+    //     'flutterdemo-d2ced-default-rtdb.asia-southeast1.firebasedatabase.app',
+    //     'shopping-list/${item.id}.json');
+    
+    // local server
+    final url = Uri.http(
+        'localhost:8000',
+        'shopping-list/${item.id}');
 
     final res = await http.delete(url);
-    debugPrint("Record Deleted:  ${res.statusCode}");
+    debugPrint("Record Deleted:  $res");
 
     if (res.statusCode >= 400) {
       setState(() {
