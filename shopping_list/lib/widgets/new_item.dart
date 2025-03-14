@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shopping_list/data/categories.dart';
+import 'package:shopping_list/db/item.db.dart';
 import 'package:shopping_list/models/category.dart';
 import 'package:http/http.dart' as http;
 import 'package:shopping_list/models/grocery_item.dart';
@@ -19,6 +20,7 @@ class _NewItemState extends State<NewItem> {
   var _enteredQuantity = 1;
   var _selectedCategory = categories[Categories.vegetables];
   bool _isAdding = false;
+  final DbItem dbItem = DbItem();
 
   void _saveItem() async {
     if (_formKey.currentState!.validate()) {
@@ -27,48 +29,26 @@ class _NewItemState extends State<NewItem> {
       setState(() {
         _isAdding = true;
       });
-
-      // firebase url
-      // final url = Uri.https(
-      //     'flutterdemo-d2ced-default-rtdb.asia-southeast1.firebasedatabase.app',
-      //     'shopping-list.json');
-
-      // local host url
-      final url = Uri.http('localhost:8000', '/shopping-list'); 
-
-      final response = await http
-          .post(
-        url,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: json.encode({
-          "name": _enteredName,
-          "quantity": _enteredQuantity,
-          "category": _selectedCategory!.title,
-        }),
-      );
-
-      if (!context.mounted) {
-        return;
-      }
-
-      setState(() {
-        _isAdding = false;
-      });
-
-      debugPrint(response.body); 
-
-      final Map<String, dynamic> jsonData = json.decode(response.body);
-
-      final newItem = GroceryItem(
-          id: jsonData['id'],
+      try {
+        GroceryItem newGroceryItem = GroceryItem(
+          id: "",
           name: _enteredName,
+          quantity: _enteredQuantity,
           category: _selectedCategory!,
-          quantity: _enteredQuantity);
+        );
 
-      Navigator.of(context).pop(newItem);
-      _formKey.currentState!.reset();
+        final id = await dbItem.dbAddItemFirebase(newGroceryItem);
+        newGroceryItem.id = id;
+        setState(() {
+          _isAdding = false;
+        });
+
+        Navigator.of(context).pop(newGroceryItem);
+        _formKey.currentState!.reset();
+      } catch (e, stackTrace) {
+        debugPrint(
+            "Error in Adding Item Message: $e, \nStack Trace: $stackTrace");
+      }
     }
   }
 
